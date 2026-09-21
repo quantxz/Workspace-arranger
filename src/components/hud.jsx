@@ -1,30 +1,39 @@
 import "../style/Hud.css"
 import "../style/SearchBar.css"
-import folder from "../assets/folder-with-files-svgrepo-com.svg";
+
 import FolderRearder from "../utils/FolderReader"
 import { useState, useEffect } from "react";
 import renderConteudo from "../utils/HudRender";
 import SteamReader from "../utils/SteamReader";
 import SearchBar from "./SearchBar"
+import ConfigsModal from "../Modals/ConfigsModal";
+
 export default function Hud({ selecionado }) {
     const MenuSelected = selecionado;
 
     const [arquivos, setArquivos] = useState([]);
     const [jogos, setJogos] = useState([]);
+    const [caminho, setCaminho] = useState("desktop");
 
-    const caminho = "C:\\Users\\canal\\OneDrive\\Área de Trabalho";
+    useEffect(() => {
+        async function getCaminho() {
+            const config = await window.electronAPI.lerConfig();
+
+            setCaminho(config.pastaSelecionada ?? "desktop");
+        }
+
+        getCaminho();
+    }, []);
 
     useEffect(() => {
         async function carregarArquivos() {
-
-            const resultado = await FolderRearder(
-                "C:/Users/canal/OneDrive/Área de Trabalho"
-            );
-            console.log(resultado)
+            const resultado = await FolderRearder(caminho);
+            console.log("Arquivos:", resultado);
             setArquivos(resultado);
         }
+
         carregarArquivos();
-    }, []);
+    }, [caminho]);
 
     useEffect(() => {
         async function testarSteam() {
@@ -61,6 +70,7 @@ export default function Hud({ selecionado }) {
     );
 
     return (
+
         <div className="Hud">
             <SearchBar
                 pesquisa={pesquisa}

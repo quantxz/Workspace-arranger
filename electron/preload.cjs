@@ -11,5 +11,14 @@ contextBridge.exposeInMainWorld("electronAPI", {
         ipcRenderer.invoke("steam-games"),
 
     abrirCaminho: (caminho) =>
-        ipcRenderer.invoke("abrir-caminho", caminho)
+        ipcRenderer.invoke("abrir-caminho", caminho),
+
+    selecionarPasta: () =>
+        ipcRenderer.invoke("selecionar-pasta"),
+
+    salvarConfig: (config) =>
+        ipcRenderer.invoke("salvar-config", config),
+
+    lerConfig: () =>
+        ipcRenderer.invoke("ler-config")
 });

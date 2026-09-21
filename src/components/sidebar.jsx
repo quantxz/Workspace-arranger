@@ -4,7 +4,8 @@ import joystick from "../assets/joystick-svgrepo-com.svg"
 import Console from "../assets/console-svgrepo-com.svg"
 import Photo from "../assets/photo-heart-svgrepo-com.svg"
 import Pdf from "../assets/pdf-file-svgrepo-com.svg"
-export default function Sidebar({ selecionado, setSelecionado }) {
+import Gear from "../assets/gear-svgrepo-com.svg"
+export default function Sidebar({ selecionado, setSelecionado, abrirConfigs }) {
 
     return (
         <div className="Sidebar">
@@ -43,7 +44,15 @@ export default function Sidebar({ selecionado, setSelecionado }) {
                 >
                     <img src={Photo} alt="Fotos" />
                 </div>
+                <div
+                    className={`Item FolderSelecter`}
+                    onClick={abrirConfigs}>
+                    <img src={Gear} alt="Configs" />
+                    
+                </div>
             </div>
+
+
         </div>
     )
 }
