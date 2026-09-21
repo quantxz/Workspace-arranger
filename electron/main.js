@@ -22,6 +22,18 @@ async function obterConfigPath() {
     );
 }
 
+async function lerConfig() {
+    const configPath = await obterConfigPath();
+
+    try {
+        const dados = await fs.readFile(configPath, "utf-8");
+
+        return JSON.parse(dados);
+    } catch {
+        return {};
+    }
+}
+
 function createWindow() {
     const win = new BrowserWindow({
         width: 1920,
@@ -34,7 +46,7 @@ function createWindow() {
 
 
     });
-    win.removeMenu();
+    // win.removeMenu();
     win.maximize();
     if (app.isPackaged) {
         win.loadFile(path.join(__dirname, "../dist/index.html"));
@@ -79,19 +91,31 @@ ipcMain.handle("get-file-icon", async (event, caminho) => {
 });
 
 ipcMain.handle("steam-games", async () => {
-    const apiKey = process.env.STEAM_API_KEY;
-    const steamId = process.env.STEAM_ID;
+
+    const config = await lerConfig();
+
+    const apiKey = config.apiKey;
+    const steamId = config.apiId;
+
+    if (!apiKey || !steamId) {
+        throw new Error(
+            "Steam API Key ou Steam ID não configurados."
+        );
+    }
 
     const url =
         "https://api.steampowered.com/IPlayerService/GetOwnedGames/v1/" +
-        `?key=${apiKey}` +
-        `&steamid=${steamId}` +
+        `?key=${encodeURIComponent(apiKey)}` +
+        `&steamid=${encodeURIComponent(steamId)}` +
         "&include_appinfo=true" +
         "&include_played_free_games=true";
+
     const resposta = await fetch(url);
 
     if (!resposta.ok) {
-        throw new Error(`Steam API retornou ${resposta.status}`);
+        throw new Error(
+            `Steam API retornou ${resposta.status}`
+        );
     }
 
     return await resposta.json();
