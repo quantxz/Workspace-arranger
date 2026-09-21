@@ -1,0 +1,146 @@
+.Hud {
+    position: relative;
+    width: 95vw;
+    height: 100vh;
+    padding: 15px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    overflow-x: hidden;
+    z-index: 2;
+}
+
+.Card {
+    margin-top: 35px;
+    z-index: 2;
+    position: relative;
+    width: 10vw;
+    height: 12vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+
+    padding: 10px;
+
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+
+    background: rgba(255, 255, 255, 0.035);
+
+    backdrop-filter: blur(10px);
+
+    transition:
+        transform 0.2s ease,
+        background 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+
+    cursor: pointer;
+}
+
+
+.Card:hover {
+    transform: translateY(-5px) scale(1.02);
+
+    background: rgba(255, 255, 255, 0.07);
+
+    border-color: rgba(100, 200, 255, 0.35);
+
+    box-shadow:
+        0 10px 30px rgba(0, 0, 0, 0.35),
+        0 0 20px rgba(80, 180, 255, 0.08);
+}
+
+.Card img {
+    width: 100%;
+    height: 80%;
+    object-fit: cover;
+}
+
+
+.Card>p {
+    width: 100%;
+    margin: 5px 0 0;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CardGame {
+    height: 15vw;
+}
+
+.Card img {
+    width: 70%;
+    height: 70%;
+
+    object-fit: contain;
+
+    transition:
+        transform 0.25s ease,
+        filter 0.25s ease;
+}
+
+.Card:hover img {
+    transform: scale(1.08);
+
+    filter:
+        drop-shadow(0 0 8px rgba(255, 255, 255, 0.15));
+}
+
+.Card {
+    animation: cardAppear 0.35s ease both;
+}
+
+@keyframes cardAppear {
+    from {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.Card::before {
+    content: "";
+
+    position: absolute;
+    inset: 0;
+
+    border-radius: inherit;
+
+    background: linear-gradient(120deg,
+            transparent 30%,
+            rgba(255, 255, 255, 0.08),
+            transparent 70%);
+
+    opacity: 0;
+
+    transition: opacity 0.3s;
+
+    pointer-events: none;
+}
+
+.Card:hover::before {
+    opacity: 1;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+/* Fundo atrás do botão da barra */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Botão que você arrasta */
+::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
