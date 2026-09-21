@@ -6,7 +6,6 @@ import { useState, useEffect } from "react";
 import renderConteudo from "../utils/HudRender";
 import SteamReader from "../utils/SteamReader";
 import SearchBar from "./SearchBar"
-import ConfigsModal from "../Modals/ConfigsModal";
 
 export default function Hud({ selecionado }) {
     const MenuSelected = selecionado;

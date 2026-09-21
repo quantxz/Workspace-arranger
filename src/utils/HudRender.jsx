@@ -41,10 +41,19 @@ export default function renderConteudo(MenuSelected, arquivos, jogos) {
 
         case "Programs":
             return arquivos
-                .filter((arquivo) => arquivo.tipo === ".exe")
+                .filter(arquivo => [
+                    ".exe",
+                    ".com",
+                    ".bat",
+                    ".cmd",
+                    ".msi",
+                    ".lnk",
+                    ".scr",
+                    ".ps1"
+                ].includes(arquivo.tipo))
                 .map((arquivo) => (
 
-                    <div className="Card" key={arquivo.caminho} onClick={() => window.electronAPI.abrirCaminho(arquivo.caminho)}> 
+                    <div className="Card" key={arquivo.caminho} onClick={() => window.electronAPI.abrirCaminho(arquivo.caminho)}>
                         <img src={cmd} alt="Pasta" />
                         <p>{arquivo.nome}</p>
                     </div>
